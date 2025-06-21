@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer       # asegura un salto de línea final
+      - id: trailing-whitespace     # elimina espacios en blanco finales
+      - id: check-yaml              # valida sintaxis YAML
+
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black                   # formatea tu código a PEP-8/Black
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 5.0.4
+    hooks:
+      - id: flake8                  # chequea estilo y errores simples
+        args: [--max-line-length=88,
+               --extend-ignore=E203,
+               --extend-ignore=W503]
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: pylint-2.15.0
+    hooks:
+      - id: pylint                  # análisis estático más profundo
