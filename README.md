@@ -38,7 +38,7 @@ Ideal for small stores looking for a simple and practical solution, and also sui
 ## 🤝 Contributions
 
 This project was developed as a personal practice for a family business.  
-If you have ideas or suggestions, feel free to open an issue or contact me.
+If you have ideas or suggestions, feel free to open an issue or contact me
 
 ---
 
