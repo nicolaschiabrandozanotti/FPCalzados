@@ -20,9 +20,9 @@ Ideal for small stores looking for a simple and practical solution, and also sui
 ## 🛠 Technologies Used
 
 - **Python 3**
-- Graphical interface with **Tkinter** (or your choice)
-- Local database with **SQLite** / CSV files (depending on implementation)
-- Additional libraries: *(list the ones you used, e.g., pandas, openpyxl, etc.)*
+- Graphical interface with **Tkinter** 
+- Local database with **SQLite** 
+- Additional libraries: -
 
 
 ---
@@ -31,7 +31,7 @@ Ideal for small stores looking for a simple and practical solution, and also sui
 
 - ✅ Basic functionality completed (MVP)
 - ⚙️ Planned improvements such as automatic backup and login system
-- 🐞 Known bugs (add if any)
+- 🐞 Known bugs
 
 ---
 
