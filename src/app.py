@@ -4,6 +4,11 @@ from interface import formBox, button, rightText, dataFilter, canvasMainTable, b
 # from interface import interface_menu, data_entry, options
 from utils import appSize
 import os
+import logging
+from config import setup_logging
+
+setup_logging()
+
 
 def app():
     # ---------------------------
@@ -11,21 +16,23 @@ def app():
     # ---------------------------
 
     # Inicialice app
+    logging.info('Starting FPCalzados app')
     window = tk.Tk()
     window.withdraw()
+    logging.debug('Main window created and hidden awaiting login ')
     if verify_password(window):
+        logging.info('Authentication successful, revealing main interface')
         window.deiconify()
         # Set window app title
         window.title('FP Calzados')
         # Create window-app
         window.geometry(appSize(window))
         # App ico
-        # Construimos la ruta absoluta del ícono
+        # Build the absolut route for icon
         icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'img', 'fpimage.ico'))
-        print("Icon path:", icon_path)  # Para chequear que esté bien
-
+        # Set icon for main window
         window.iconbitmap(icon_path)
-
+        logging.debug("Loading application icon from: %s", icon_path)
         # ------------------
         # Box/Window Setup
         # ------------------
@@ -125,7 +132,7 @@ def app():
 
         # Main box table
         canvasMainTable(main_frame)
-
+        logging.info('Main interface configured')
         # Close app
         window.protocol("WM_DELETE_WINDOW",
                         lambda: bttonStatus(window,
@@ -133,8 +140,12 @@ def app():
                                             message='¿Estás seguro de que quiere salir?'))
 
         # Start app
+
         window.mainloop()
+        logging.info("Application closed by user")
+
     else:
+        logging.error("Password verification failed, shutting down application")
         window.destroy()
 
 

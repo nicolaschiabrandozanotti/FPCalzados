@@ -1,3 +1,4 @@
+import logging
 import tkinter as tk
 from tkinter import messagebox
 import bcrypt
@@ -8,6 +9,7 @@ from PIL import Image, ImageTk
 class LoginWindow(tk.Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
+        logging.debug("Displaying login window")
         self.title("Iniciar sesión")
         self.geometry("325x100")
         self.resizable(False, False)
@@ -38,7 +40,7 @@ class LoginWindow(tk.Toplevel):
         self.submit_btn.pack(side='left')
 
         self.attempts = 0
-        self.max_attempts = 3
+        self.max_attempts = int(os.getenv('MAX_LOGIN_ATTEMPTS', 3))
 
         self.protocol("WM_DELETE_WINDOW", self.on_close)
 
@@ -76,6 +78,7 @@ class LoginWindow(tk.Toplevel):
             with open(AUTH_PATH, 'rb') as f:
                 stored_hash = f.read().strip()
         except FileNotFoundError:
+            logging.critical("Password file not found at %s", AUTH_PATH)
             messagebox.showerror("Error", "El archivo de la contraseña no se pudo encontrar.")
             self.destroy()
             return
@@ -83,15 +86,18 @@ class LoginWindow(tk.Toplevel):
         entered_password = self.password_entry.get()
 
         if bcrypt.checkpw(entered_password.encode('utf-8'), stored_hash):
+            logging.info('Correct password entered')
             self.destroy()  # Close login window, password correct
         else:
             self.attempts += 1
             remaining = self.max_attempts - self.attempts
+            logging.warning('Incorrect password attempt %d of %d', self.attempts, self.max_attempts)
             self.password_entry.config(state='disabled')
             if remaining > 0:
                 messagebox.showwarning("Contraseña Incorrecta",
                                        f"Contraseña errónea. {remaining} intentos restantes.")
             else:
+                logging.critical('Maximum password attempts reached. Exiting app')
                 messagebox.showerror("Limite de intentos fallidos",
                                      "Demasiados intentos fallidos. Cerrando la aplicación.")
                 self.master.destroy()  # Close main app window
@@ -101,6 +107,7 @@ class LoginWindow(tk.Toplevel):
             self.password_entry.focus_set()
 
     def on_close(self):
+        logging.info('Login window closed by user, exiting app')
         # Handle closing login window (exit app)
         self.master.destroy()
         self.destroy()
