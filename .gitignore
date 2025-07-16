@@ -233,3 +233,7 @@ FPCalzado.db
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+# Password
+secrets/
+src/encrypt.py
