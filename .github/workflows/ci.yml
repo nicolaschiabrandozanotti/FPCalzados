@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: '**/*.csproj'
+
+      - name: Restore local tools
+        run: dotnet tool restore
+
+      - name: Restore, build, test and audit dependencies
+        shell: powershell
+        run: ./scripts/verify.ps1
+
+      - name: Publish portable application
+        run: dotnet publish src/FPCalzados.App/FPCalzados.App.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o artifacts/FPCalzados-win-x64
+
+      - name: Generate artifact checksum
+        shell: powershell
+        run: |
+          $file = Get-Item artifacts/FPCalzados-win-x64/FPCalzados.App.exe
+          $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $($file.Name)" | Set-Content artifacts/FPCalzados-win-x64/SHA256SUMS.txt
+
+      - name: Upload application artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FPCalzados-win-x64
+          path: artifacts/FPCalzados-win-x64
+          if-no-files-found: error

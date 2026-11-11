@@ -1,0 +1,36 @@
+<UserControl x:Class="FPCalzados.App.Views.SuppliersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.1*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Proveedores por marca" Margin="4">
+            <DockPanel>
+                <WrapPanel DockPanel.Dock="Top">
+                    <Button x:Name="RefreshSuppliersButton" Content="Actualizar"/>
+                    <Button x:Name="NewSupplierButton" Content="Nuevo"/>
+                    <Button x:Name="DeactivateSupplierButton" Content="Dar de baja"/>
+                </WrapPanel>
+                <DataGrid x:Name="SuppliersGrid">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Proveedor" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Marca" Binding="{Binding Brand}" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Activo" Binding="{Binding IsActive}" Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Header="Carga de proveedor" Grid.Column="1" Margin="4">
+            <StackPanel>
+                <TextBox x:Name="SupplierIdBox" Visibility="Collapsed"/>
+                <TextBlock Text="Proveedor"/>
+                <TextBox x:Name="SupplierNameBox"/>
+                <TextBlock Text="Marca asociada"/>
+                <TextBox x:Name="SupplierBrandBox"/>
+                <Button x:Name="SaveSupplierButton" Content="Guardar proveedor (Ctrl+G)"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

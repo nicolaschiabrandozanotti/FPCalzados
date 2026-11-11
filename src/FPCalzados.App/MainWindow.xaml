@@ -1,0 +1,86 @@
+<Window x:Class="FPCalzados.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FPCalzados.App"
+        xmlns:views="clr-namespace:FPCalzados.App.Views"
+        Title="FPCalzados" Height="860" Width="1320" MinHeight="720" MinWidth="1120"
+        WindowState="Maximized"
+        Background="#F6F7F9"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Window.Resources>
+        <local:PaymentMethodDisplayConverter x:Key="PaymentMethodDisplayConverter"/>
+        <local:SaleStatusDisplayConverter x:Key="SaleStatusDisplayConverter"/>
+        <local:AlertTypeDisplayConverter x:Key="AlertTypeDisplayConverter"/>
+        <local:StockMovementTypeDisplayConverter x:Key="StockMovementTypeDisplayConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid x:Name="LoginPanel" Width="420" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Background="White" BorderBrush="#D8DEE8" BorderThickness="1" CornerRadius="6" Padding="24">
+                <StackPanel>
+                    <TextBlock Text="FPCalzados" FontSize="26" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                    <TextBlock Text="Control local de zapateria" Foreground="#5F6B7A" Margin="0,0,0,20"/>
+                    <TextBlock Text="Rol"/>
+                    <ComboBox x:Name="LoginRoleBox" DisplayMemberPath="Label" SelectedValuePath="Role"/>
+                    <TextBlock Text="Clave"/>
+                    <PasswordBox x:Name="LoginPasswordBox" KeyDown="LoginPasswordBox_KeyDown"/>
+                    <TextBlock Text="Usa la contraseña de tu rol. En el primer inicio consulta CREDENCIALES-INICIALES.txt." Foreground="#697586" FontSize="12" TextWrapping="Wrap" Margin="4,2,4,12"/>
+                    <Button Content="Ingresar" Click="Login_Click" HorizontalAlignment="Stretch"/>
+                    <TextBlock x:Name="LoginErrorText" Foreground="#B42318" TextWrapping="Wrap" Margin="4,8,4,0"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid x:Name="MainShell" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" Background="#1F2937" LastChildFill="True" MinHeight="60">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <TextBlock Text="FPCalzados" Foreground="White" FontSize="20" FontWeight="SemiBold" Margin="16,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="VersionText" Foreground="#93C5FD" Margin="4,0,12,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="RoleText" Foreground="#D1D5DB" Margin="12,0" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="8,0" VerticalAlignment="Center">
+                    <Button Content="Crear backup (Ctrl+K)" ToolTip="Crea una copia manual de la base de datos" Click="ManualBackup_Click"/>
+                    <Button Content="Restaurar backup" ToolTip="Reemplaza la base actual por un backup seleccionado" Click="RestoreBackup_Click"/>
+                    <Button Content="Cambiar mi clave" ToolTip="Cambia la contraseña del rol actualmente conectado" Click="ChangeCurrentPassword_Click"/>
+                    <Button Content="Acerca de" ToolTip="Muestra version y datos de la app" Click="About_Click"/>
+                    <Button Content="Cerrar sesion" ToolTip="Vuelve al login; no cierra la app" Click="Logout_Click"/>
+                </StackPanel>
+                <TextBlock Text="Atajos globales: F2 nueva venta | F3 buscar venta | F4 buscar stock | Ctrl+F buscar | Ctrl+Enter agregar | Ctrl+G guardar"
+                           Foreground="#CBD5E1" FontSize="12" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+            </DockPanel>
+
+            <TabControl x:Name="MainTabs" Grid.Row="1" Margin="10" SelectionChanged="MainTabs_SelectionChanged">
+                <TabItem Header="Dashboard">
+                    <views:DashboardView x:Name="DashboardViewControl"/>
+                </TabItem>
+
+                <TabItem Header="Ventas">
+                    <views:SalesView x:Name="SalesViewControl"/>
+                </TabItem>
+
+                <TabItem Header="Productos y stock">
+                    <views:InventoryView x:Name="InventoryViewControl"/>
+                </TabItem>
+
+                <TabItem Header="Proveedores">
+                    <views:SuppliersView x:Name="SuppliersViewControl"/>
+                </TabItem>
+
+                <TabItem Header="Importar / reportes">
+                    <views:ReportsView x:Name="ReportsViewControl"/>
+                </TabItem>
+
+                <TabItem Header="Configuracion">
+                    <views:SettingsView x:Name="SettingsViewControl"/>
+                </TabItem>
+            </TabControl>
+
+            <TextBlock x:Name="StatusText" Grid.Row="2" Padding="12" Background="#E5E7EB" Text="Listo"/>
+        </Grid>
+    </Grid>
+</Window>

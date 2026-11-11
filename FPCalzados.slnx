@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FPCalzados.App/FPCalzados.App.csproj" />
+    <Project Path="src/FPCalzados.Domain/FPCalzados.Domain.csproj" />
+    <Project Path="src/FPCalzados.Infrastructure/FPCalzados.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FPCalzados.Tests/FPCalzados.Tests.csproj" />
+  </Folder>
+</Solution>

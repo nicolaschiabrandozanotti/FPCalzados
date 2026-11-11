@@ -1,0 +1,89 @@
+<UserControl x:Class="FPCalzados.App.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1.1*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Reglas de pago" Margin="4">
+            <DockPanel>
+                <WrapPanel DockPanel.Dock="Top">
+                    <StackPanel Width="170">
+                        <TextBlock Text="Nombre de la regla"/>
+                        <TextBox x:Name="RuleNameBox"/>
+                    </StackPanel>
+                    <StackPanel Width="150">
+                        <TextBlock Text="Medio de pago"/>
+                        <ComboBox x:Name="RuleMethodBox" DisplayMemberPath="Label" SelectedValuePath="Method"/>
+                    </StackPanel>
+                    <StackPanel Width="110">
+                        <TextBlock Text="% extra o desc."/>
+                        <TextBox x:Name="RulePercentBox"/>
+                    </StackPanel>
+                    <StackPanel Width="80">
+                        <TextBlock Text="Cuotas"/>
+                        <TextBox x:Name="RuleInstallmentsBox"/>
+                    </StackPanel>
+                    <Button x:Name="NewRuleButton" Content="Nueva regla" VerticalAlignment="Bottom"/>
+                    <Button x:Name="SaveRuleButton" Content="Guardar cambios (Ctrl+G)" VerticalAlignment="Bottom"/>
+                    <Button x:Name="DeleteRuleButton" Content="Eliminar regla" VerticalAlignment="Bottom"/>
+                </WrapPanel>
+                <DataGrid x:Name="RulesGrid">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Medio" Binding="{Binding PaymentMethod, Converter={StaticResource PaymentMethodDisplayConverter}}" Width="100"/>
+                        <DataGridTextColumn Header="%" Binding="{Binding PercentModifier}" Width="70"/>
+                        <DataGridTextColumn Header="Cuotas" Binding="{Binding Installments}" Width="70"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Header="Claves locales" Grid.Column="1" Margin="4">
+            <StackPanel>
+                <TextBlock Text="Rol"/>
+                <ComboBox x:Name="PasswordRoleBox" Width="180" HorizontalAlignment="Left" DisplayMemberPath="Label" SelectedValuePath="Role"/>
+                <TextBlock Text="Nueva clave"/>
+                <PasswordBox x:Name="NewPasswordBox" Width="220" HorizontalAlignment="Left"/>
+                <Button x:Name="ChangePasswordButton" Content="Cambiar clave" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Datos del negocio" Grid.Row="1" Grid.ColumnSpan="2" Margin="4">
+            <WrapPanel>
+                <StackPanel Width="210"><TextBlock Text="Nombre del local"/><TextBox x:Name="BusinessNameBox"/></StackPanel>
+                <StackPanel Width="260"><TextBlock Text="Dirección"/><TextBox x:Name="BusinessAddressBox"/></StackPanel>
+                <StackPanel Width="150"><TextBlock Text="Teléfono"/><TextBox x:Name="BusinessPhoneBox"/></StackPanel>
+                <StackPanel Width="150"><TextBlock Text="CUIT/DNI"/><TextBox x:Name="BusinessTaxIdBox"/></StackPanel>
+                <StackPanel Width="260"><TextBlock Text="Pie del ticket"/><TextBox x:Name="BusinessTicketFooterBox"/></StackPanel>
+                <Button x:Name="SaveBusinessSettingsButton" Content="Guardar datos" VerticalAlignment="Bottom"/>
+            </WrapPanel>
+        </GroupBox>
+        <GroupBox Header="Registro de actividad (auditoría)" Grid.Row="2" Grid.ColumnSpan="2" Margin="4">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="Historial de acciones importantes: quién modificó stock, ventas, pagos, configuración, backups o clientes. Sirve para revisar qué ocurrió y cuándo; no modifica los datos." TextWrapping="Wrap" Foreground="#5F6B7A" Margin="4,2,4,8"/>
+                    <WrapPanel>
+                    <Button x:Name="RefreshAuditLogsButton" Content="Actualizar auditoría"/>
+                    <Button x:Name="ExportAuditLogsButton" Content="Exportar auditoría"/>
+                    <Button x:Name="ReviewDuplicateCustomersButton" Content="Revisar clientes duplicados"/>
+                    </WrapPanel>
+                </StackPanel>
+                <DataGrid x:Name="AuditLogsGrid">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding OccurredAt, StringFormat={}{0:g}}" Width="130"/>
+                        <DataGridTextColumn Header="Rol" Binding="{Binding Role}" Width="90"/>
+                        <DataGridTextColumn Header="Acción" Binding="{Binding Action}" Width="150"/>
+                        <DataGridTextColumn Header="Entidad" Binding="{Binding Entity}" Width="120"/>
+                        <DataGridTextColumn Header="Id" Binding="{Binding EntityId}" Width="80"/>
+                        <DataGridTextColumn Header="Mensaje" Binding="{Binding Message}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

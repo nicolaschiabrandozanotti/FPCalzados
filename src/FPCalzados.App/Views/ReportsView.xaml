@@ -1,0 +1,31 @@
+<UserControl x:Class="FPCalzados.App.Views.ReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Importacion de stock XLSX">
+            <WrapPanel>
+                <Button x:Name="CreateStockTemplateButton" Content="Crear plantilla stock"/>
+                <Button x:Name="ImportStockButton" Content="Importar stock"/>
+            </WrapPanel>
+        </GroupBox>
+        <GroupBox Header="Reportes XLSX" Grid.Row="1" Margin="0,8">
+            <WrapPanel>
+                <TextBlock Text="Desde" VerticalAlignment="Center"/>
+                <DatePicker x:Name="ReportFromPicker"/>
+                <TextBlock Text="Hasta" VerticalAlignment="Center"/>
+                <DatePicker x:Name="ReportToPicker"/>
+                <Button x:Name="ExportSalesButton" Content="Exportar ventas XLSX"/>
+                <Button x:Name="ExportSalesPdfButton" Content="Exportar ventas PDF"/>
+                <Button x:Name="ExportInventoryButton" Content="Exportar inventario XLSX"/>
+                <Button x:Name="ExportInventoryPdfButton" Content="Exportar inventario PDF"/>
+                <Button x:Name="ExportProfitabilityButton" Content="Exportar rentabilidad"/>
+            </WrapPanel>
+        </GroupBox>
+        <TextBox x:Name="ReportLogBox" Grid.Row="2" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</UserControl>
